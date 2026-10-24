@@ -1,206 +1,172 @@
-#Requires -Version 5.1
-<#
-.SYNOPSIS
-    Generates a vertical 9:16 HTML slide deck from a YAML content file.
-.DESCRIPTION
-    Reads deck.yml, merges content into template.html, writes index.html.
-    Usage:  .\generate.ps1 [-InputFile deck.yml] [-Template template.html] [-Output index.html]
-.PARAMETER InputFile
-    Path to the YAML deck definition. Default: deck.yml
-.PARAMETER Template
-    Path to the HTML template. Default: template.html
-.PARAMETER Output
-    Path for the generated HTML. Default: index.html
-.EXAMPLE
-    .\generate.ps1
-    .\generate.ps1 -InputFile thanksgiving.yml -Output ../docs/thanksgiving.html
-#>
-[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '')]
 param(
-    [string]$InputFile = "deck.yml",
-    [string]$Template  = "template.html",
-    [string]$Output    = "index.html"
+    [Parameter(Mandatory=$true)][string]$InputFile,
+    [string]$Theme = "agape-farm",
+    [string]$OutDir = ""
 )
+$ErrorActionPreference = "Stop"
+$root = Split-Path -Parent $MyInvocation.MyCommand.Path
+if (-not $OutDir) { $OutDir = Join-Path $root "..\docs" }
+if (-not (Test-Path $OutDir)) { New-Item -ItemType Directory -Path $OutDir | Out-Null }
 
-Set-StrictMode -Version Latest
-$ErrorActionPreference = 'Stop'
+$themePath = Join-Path $root "themes\$Theme.json"
+if (-not (Test-Path $themePath)) { throw "Theme not found: $themePath" }
+$theme = Get-Content $themePath -Raw | ConvertFrom-Json
+$t = $theme.tokens
 
-# ---------- minimal YAML subset parser ----------
-function ConvertFrom-SimpleYAML {
-    param([string]$Text)
-    $lines = $Text -split "`n"
+$ymlPath = if ([System.IO.Path]::IsPathRooted($InputFile)) { $InputFile } else { Join-Path $root $InputFile }
+if (-not (Test-Path $ymlPath)) { throw "Input YAML not found: $ymlPath" }
+$ymlText = Get-Content $ymlPath -Raw
+
+function Parse-SimpleYml([string]$text) {
+    $lines = $text -split "`n"
     $root = [ordered]@{}
-    $stack = [System.Collections.Stack]::new()
-    $stack.Push(@{ Node = $root; Indent = -1 })
-
-    foreach ($raw in $lines) {
+    $stack = New-Object System.Collections.Stack
+    $stack.Push(@{Indent=-1; Node=$root})
+    function NextNonEmpty([int]$i) {
+        for ($j=$i+1; $j -lt $lines.Count; $j++) {
+            $l = $lines[$j]
+            if ($l -match '^\s*#' -or $l -match '^\s*$') { continue }
+            return $l
+        }
+        return ""
+    }
+    for ($i=0; $i -lt $lines.Count; $i++) {
+        $raw = $lines[$i]
         if ($raw -match '^\s*#' -or $raw -match '^\s*$') { continue }
         if ($raw -match '^(\s*)-\s+(.*)$') {
-            $indent = $Matches[1].Length
-            $content = $Matches[2]
+            $indent = $Matches[1].Length; $content = $Matches[2]
             while ($stack.Peek().Indent -ge $indent) { [void]$stack.Pop() }
             $parent = $stack.Peek().Node
-            if (-not ($parent -is [System.Collections.IList])) {
-                throw "YAML parse error near: $raw"
-            }
+            if ($parent -isnot [System.Collections.IList]) { throw "YAML error: $raw" }
             if ($content -match '^(.+?):\s*(.*)$') {
                 $obj = [ordered]@{}
                 $obj[$Matches[1].Trim()] = $Matches[2].Trim().Trim('"').Trim("'")
                 $parent.Add($obj)
-                $stack.Push(@{ Node = $obj; Indent = $indent })
+                $stack.Push(@{Indent=$indent; Node=$obj})
             } else {
                 $parent.Add($content.Trim().Trim('"').Trim("'"))
             }
-        }
-        else {
-            if ($raw -notmatch '^(\s*)([^:]+):\s*(.*)$') {
-                throw "YAML parse error near: $raw"
-            }
-            $indent = $Matches[1].Length
-            $key = $Matches[2].Trim()
-            $val = $Matches[3].Trim().Trim('"').Trim("'")
-            while ($stack.Peek().Indent -ge $indent) { [void]$stack.Pop() }
-            $parent = $stack.Peek().Node
-            if ($parent -is [System.Collections.IList]) {
-                $obj = [ordered]@{}
-                if ($val -ne '') { $obj['value'] = $val }
-                $parent.Add($obj)
-                if ($val -eq '') { $stack.Push(@{ Node = $obj; Indent = $indent }) }
-            } else {
-                if ($val -eq '') {
+        } else {
+            if ($raw -match '^(\s*)([^:]+):\s*(.*)$') {
+                $indent = $Matches[1].Length; $key = $Matches[2].Trim(); $val = $Matches[3].Trim().Trim('"').Trim("'")
+                while ($stack.Peek().Indent -ge $indent) { [void]$stack.Pop() }
+                $parent = $stack.Peek().Node
+                if ($parent -is [System.Collections.IList]) {
                     $obj = [ordered]@{}
-                    $parent[$key] = $obj
-                    $stack.Push(@{ Node = $obj; Indent = $indent })
+                    if ($val -ne '') { $obj['value'] = $val }
+                    $parent.Add($obj)
+                    if ($val -eq '') { $stack.Push(@{Indent=$indent; Node=$obj}) }
                 } else {
-                    $parent[$key] = $val
+                    if ($val -eq '') {
+                        $nxt = NextNonEmpty $i
+                        if ($nxt -match '^\s*-\s+') {
+                            $lst = New-Object System.Collections.ArrayList
+                            $parent[$key] = $lst
+                            $stack.Push(@{Indent=$indent; Node=$lst})
+                        } else {
+                            $obj = [ordered]@{}
+                            $parent[$key] = $obj
+                            $stack.Push(@{Indent=$indent; Node=$obj})
+                        }
+                    } else {
+                        $parent[$key] = $val
+                    }
                 }
-            }
+            } else { throw "YAML error: $raw" }
         }
     }
     return $root
 }
 
-# ---------- slide renderers ----------
-function Render-Slide {
-    param($Slide, [int]$Index)
-    $id = "s$Index"
-    $parts = @()
-    $parts += "<section class=`"slide`" id=`"$id`">"
-
-    if ($Slide.tag)    { $parts += "  <span class=`"tag`">$($Slide.tag)</span>" }
-    if ($Slide.phase)  { $parts += "  <div class=`"phase-num`">$($Slide.phase)</div>" }
-    if ($Slide.timeline) { $parts += "  <div class=`"timeline`">$($Slide.timeline)</div>" }
-
-    if ($Slide.title) {
-        $t = $Slide.title -replace '__ACCENT__','<span class="accent">' -replace '__ACCENT2__','<span class="accent2">'
-        $open = ([regex]::Matches($t, '<span')).Count
-        $close = ([regex]::Matches($t, '</span>')).Count
-        for ($i = 0; $i -lt ($open - $close); $i++) { $t += '</span>' }
-        if ($t -match '<br') { $parts += "  <h1>$t</h1>" } else { $parts += "  <h2>$t</h2>" }
-    }
-
-    if ($Slide.subtitle) { $parts += "  <p class=`"sub`">$($Slide.subtitle)</p>" }
-
-    if ($Slide.stats) {
-        $parts += '  <div class="stat-row">'
-        foreach ($st in $Slide.stats) {
-            $parts += "    <div class=`"stat`"><div class=`"n`">$($st.n)</div><div class=`"l`">$($st.l)</div></div>"
-        }
-        $parts += '  </div>'
-    }
-
-    if ($Slide.cards) {
-        $parts += '  <div class="two-col">'
-        foreach ($c in $Slide.cards) {
-            $parts += '    <div class="card">'
-            if ($c.pillar) { $parts += "      <div class=`"pillar $($c.pillar_class)`">$($c.pillar)</div>" }
-            if ($c.title)  { $parts += "      <h3>$($c.title)</h3>" }
-            if ($c.text)   { $parts += "      <p>$($c.text)</p>" }
-            $parts += '    </div>'
-        }
-        $parts += '  </div>'
-    }
-
-    if ($Slide.list) {
-        $parts += '  <ul>'
-        foreach ($item in $Slide.list) { $parts += "    <li>$item</li>" }
-        $parts += '  </ul>'
-    }
-
-    if ($Slide.note) {
-        $parts += "  <div class=`"note-box`">$($Slide.note)</div>"
-    }
-
-    if ($Slide.ask) {
-        $a = $Slide.ask
-        $parts += '  <div class="ask-box">'
-        if ($a.title) { $parts += "    <div class=`"price`">$($a.title)</div>" }
-        if ($a.text)  { $parts += "    <p style=`"margin-top:10px;color:var(--muted);font-size:15px;line-height:1.5;`">$($a.text)</p>" }
-        if ($a.button) {
-            $href = if ($a.button_href) { $a.button_href } else { '#' }
-            $parts += "    <a class=`"btn`" href=`"$href`">$($a.button)</a>"
-        }
-        $parts += '  </div>'
-    }
-
-    if ($Slide.footer) {
-        $parts += "  <p class=`"footer-note`">$($Slide.footer)</p>"
-    }
-
-    $parts += '</section>'
-    return ($parts -join "`n")
-}
-
-# ---------- main ----------
-if (-not (Test-Path $InputFile)) { throw "Input file not found: $InputFile" }
-if (-not (Test-Path $Template))  { throw "Template not found: $Template" }
-
-$yamlText = Get-Content -Raw -Path $InputFile
-$deck = ConvertFrom-SimpleYAML -Text $yamlText
-
-$tpl = Get-Content -Raw -Path $Template
-
-$meta = $deck.meta
+$deck = Parse-SimpleYml $ymlText
+$meta = $deck['meta']
 if (-not $meta) { $meta = [ordered]@{} }
 
-function Get-Val($obj, $key, $default = '') {
-    if ($null -eq $obj) { return $default }
-    if ($obj.Contains($key)) { return [string]$obj[$key] }
-    return $default
-}
+function Esc([string]$s) { return [System.Net.WebUtility]::HtmlEncode($s) }
 
-$replacements = [ordered]@{
-    '__TITLE__'         = (Get-Val $meta 'title' 'Deck')
-    '__DESCRIPTION__'   = (Get-Val $meta 'description')
-    '__OG_TITLE__'      = (Get-Val $meta 'og_title' (Get-Val $meta 'title'))
-    '__OG_DESCRIPTION__'= (Get-Val $meta 'og_description' (Get-Val $meta 'description'))
-    '__THEME_COLOR__'   = (Get-Val $meta 'theme_color' '#0d1f17')
-    '__FOREST__'        = (Get-Val $meta 'forest' '#0d1f17')
-    '__FOREST_MID__'    = (Get-Val $meta 'forest_mid' '#143528')
-    '__ACCENT_COLOR__'  = (Get-Val $meta 'accent' '#3fb950')
-    '__ACCENT_DIM__'    = (Get-Val $meta 'accent_dim' '#2a7d3a')
-    '__CREAM__'         = (Get-Val $meta 'cream' '#f0f6fc')
-    '__MUTED__'         = (Get-Val $meta 'muted' '#8ba3b0')
-    '__CARD_BG__'       = (Get-Val $meta 'card_bg' '#12261c')
-    '__ACCENT2_COLOR__' = (Get-Val $meta 'accent2' '#3fb950')
-}
-
-$slidesHtml = ''
-$i = 1
-if ($deck.slides) {
-    foreach ($s in $deck.slides) {
-        $slidesHtml += (Render-Slide -Slide $s -Index $i) + "`n`n"
-        $i++
+function Render-Slide($slide, [int]$idx) {
+    $sb = New-Object System.Text.StringBuilder
+    [void]$sb.AppendLine("<section class=`"slide`" id=`"s$idx`">")
+    if ($slide['tag']) { [void]$sb.AppendLine("  <span class=`"tag`">$(Esc $slide['tag'])</span>") }
+    if ($slide['phase']) { [void]$sb.AppendLine("  <div class=`"phase-num`">$(Esc $slide['phase'])</div>") }
+    if ($slide['timeline']) { [void]$sb.AppendLine("  <div class=`"timeline`">$(Esc $slide['timeline'])</div>") }
+    if ($slide['title']) {
+        $t = $slide['title'].Replace('__ACCENT__','<span class="accent">').Replace('__ACCENT2__','<span class="accent2">')
+        $o = ([regex]::Matches($t,'<span')).Count; $c = ([regex]::Matches($t,'</span>')).Count
+        if ($o -gt $c) { $t += '</span>' * ($o-$c) }
+        $tag = if ($t -match '<br') { 'h1' } else { 'h2' }
+        [void]$sb.AppendLine("  <$tag>$t</$tag>")
     }
+    if ($slide['subtitle']) { [void]$sb.AppendLine("  <p class=`"sub`">$(Esc $slide['subtitle'])</p>") }
+    if ($slide['stats']) {
+        [void]$sb.AppendLine("  <div class=`"stat-row`">")
+        foreach ($st in $slide['stats']) {
+            [void]$sb.AppendLine("    <div class=`"stat`"><div class=`"n`">$(Esc $st['n'])</div><div class=`"l`">$(Esc $st['l'])</div></div>")
+        }
+        [void]$sb.AppendLine("  </div>")
+    }
+    if ($slide['cards']) {
+        [void]$sb.AppendLine("  <div class=`"two-col`">")
+        foreach ($c in $slide['cards']) {
+            [void]$sb.AppendLine("    <div class=`"card`">")
+            if ($c['pillar']) { [void]$sb.AppendLine("      <div class=`"pillar $(Esc $c['pillar_class'])`">$(Esc $c['pillar'])</div>") }
+            if ($c['title']) { [void]$sb.AppendLine("      <h3>$(Esc $c['title'])</h3>") }
+            if ($c['text']) { [void]$sb.AppendLine("      <p>$(Esc $c['text'])</p>") }
+            [void]$sb.AppendLine("    </div>")
+        }
+        [void]$sb.AppendLine("  </div>")
+    }
+    if ($slide['list']) {
+        [void]$sb.AppendLine("  <ul>")
+        foreach ($item in $slide['list']) { [void]$sb.AppendLine("    <li>$(Esc $item)</li>") }
+        [void]$sb.AppendLine("  </ul>")
+    }
+    if ($slide['note']) { [void]$sb.AppendLine("  <div class=`"note-box`">$(Esc $slide['note'])</div>") }
+    if ($slide['ask']) {
+        $a = $slide['ask']
+        [void]$sb.AppendLine("  <div class=`"ask-box`">")
+        if ($a['title']) { [void]$sb.AppendLine("    <div class=`"price`">$(Esc $a['title'])</div>") }
+        if ($a['text']) { [void]$sb.AppendLine("    <p style=`"margin-top:10px;color:var(--muted);font-size:15px;line-height:1.5;`">$(Esc $a['text'])</p>") }
+        if ($a['button']) {
+            $href = if ($a['button_href']) { $a['button_href'] } else { '#' }
+            [void]$sb.AppendLine("    <a class=`"btn`" href=`"$(Esc $href)`">$(Esc $a['button'])</a>")
+        }
+        [void]$sb.AppendLine("  </div>")
+    }
+    if ($slide['footer']) { [void]$sb.AppendLine("  <p class=`"footer-note`">$(Esc $slide['footer'])</p>") }
+    [void]$sb.AppendLine("</section>")
+    return $sb.ToString()
 }
-$replacements['__SLIDES__'] = $slidesHtml.TrimEnd()
 
-foreach ($k in $replacements.Keys) {
-    $tpl = $tpl.Replace($k, [string]$replacements[$k])
+$slidesHtml = ""
+$idx = 1
+foreach ($s in $deck['slides']) { $slidesHtml += (Render-Slide $s $idx) + "`n`n"; $idx++ }
+
+$tpl = Get-Content (Join-Path $root "template.html") -Raw
+$reps = [ordered]@{
+    '__TITLE__' = $(if ($meta['title']){$meta['title']}else{'Deck'})
+    '__DESCRIPTION__' = $(if ($meta['description']){$meta['description']}else{''})
+    '__OG_TITLE__' = $(if ($meta['og_title']){$meta['og_title']}else{$(if($meta['title']){$meta['title']}else{'Deck'})})
+    '__OG_DESCRIPTION__' = $(if ($meta['og_description']){$meta['og_description']}else{$(if($meta['description']){$meta['description']}else{''})})
+    '__THEME_COLOR__' = $t.theme_color
+    '__FOREST__' = $t.forest
+    '__FOREST_MID__' = $t.forest_mid
+    '__ACCENT_COLOR__' = $t.accent
+    '__ACCENT_DIM__' = $t.accent_dim
+    '__CREAM__' = $t.cream
+    '__MUTED__' = $t.muted
+    '__CARD_BG__' = $t.card_bg
+    '__ACCENT2_COLOR__' = $t.accent2
+    '__HEADING_FONT__' = $t.heading_font
+    '__BODY_FONT__' = $t.body_font
+    '__RADIUS_PX__' = $t.radius_px
+    '__PAD_X_PX__' = $t.pad_x_px
+    '__PAD_Y_PX__' = $t.pad_y_px
+    '__SLIDES__' = $slidesHtml.TrimEnd()
 }
+foreach ($k in $reps.Keys) { $tpl = $tpl.Replace($k, [string]$reps[$k]) }
 
-$outDir = Split-Path -Parent $Output
-if ($outDir -and -not (Test-Path $outDir)) { New-Item -ItemType Directory -Path $outDir | Out-Null }
-
-Set-Content -Path $Output -Value $tpl -Encoding UTF8
-Write-Host "Generated $Output ($((Get-Item $Output).Length) bytes, $($i-1) slides)" -ForegroundColor Green
+$baseName = [System.IO.Path]::GetFileNameWithoutExtension($ymlPath)
+$outFile = Join-Path $OutDir "$baseName.html"
+Set-Content -Path $outFile -Value $tpl -Encoding UTF8
+Write-Host "Generated $outFile ($((Get-Item $outFile).Length) bytes, $($deck['slides'].Count) slides) with theme $Theme"

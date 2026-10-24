@@ -1,0 +1,15 @@
+:root {
+  --forest: #2f3a22;
+  --forest-mid: #3d4a2c;
+  --green: #6b7f3a;
+  --green-dim: #55662e;
+  --cream: #f7f1e5;
+  --muted: #7a6f5d;
+  --card: #efe6d6;
+  --accent2: #8a5a2b;
+  --heading-font: Georgia, Georgia, serif;
+  --body-font: system-ui, system-ui, sans-serif;
+  --radius: 10px;
+  --slide-pad-x: 32px;
+  --slide-pad-y: 48px;
+}

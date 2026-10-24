@@ -1,31 +1,34 @@
-# agape-farmstead-seo-proposal
+# Agape Farmstead SEO Proposal
 
-Proposal decks for **Agape Farmstead** (agapefarmstead.com) — vertical 9:16 HTML presentations built from a shared template and YAML content files.
+Proposal decks for Agape Farmstead (agapefarmstead.com), a regenerative, faith-driven farm in Clarksville/Adams, TN.
 
-## Decks (GitHub Pages)
+## Live Decks (GitHub Pages)
 
-| Deck | Link | Source YAML |
-|------|------|-------------|
-| **SEO & Content Proposal** | [sharpninja.github.io/agape-farmstead-seo-proposal](https://sharpninja.github.io/agape-farmstead-seo-proposal/) | `source/seo.yml` |
-| **Thanksgiving Delivery Expansion** | […/thanksgiving.html](https://sharpninja.github.io/agape-farmstead-seo-proposal/thanksgiving.html) | `source/thanksgiving.yml` |
-| **Brand Sustainability & Growth** | […/brand-growth.html](https://sharpninja.github.io/agape-farmstead-seo-proposal/brand-growth.html) | `source/brand-growth.html` |
+| Deck | Link |
+|------|------|
+| SEO & Content Proposal | https://sharpninja.github.io/agape-farmstead-seo-proposal/seo.html |
+| Thanksgiving Delivery Expansion | https://sharpninja.github.io/agape-farmstead-seo-proposal/thanksgiving.html |
+| Brand Sustainability & Growth | https://sharpninja.github.io/agape-farmstead-seo-proposal/brand-growth.html |
 
-## Regenerate a deck
+## Regenerate a Deck
 
 ```powershell
 cd source
-./generate.ps1 -InputFile seo.yml -Output ../docs/index.html
-./generate.ps1 -InputFile thanksgiving.yml -Output ../docs/thanksgiving.html
-./generate.ps1 -InputFile brand-growth.yml -Output ../docs/brand-growth.html
+./generate.ps1 -InputFile seo.yml
+./generate.ps1 -InputFile thanksgiving.yml
+./generate.ps1 -InputFile brand-growth.yml
 ```
 
-## Structure
+All decks default to the **agape-farm** theme (warm cream, olive green, earthy brown, Georgia serif headlines). Swap themes with `-Theme <name>` — theme files live in `source/themes/`.
 
-- `source/template.html` — shared 9:16 slide template with forest/money-green theming
-- `source/generate.ps1` — PowerShell generator that merges YAML into the template
-- `source/*.yml` — per-deck content (meta, slides, cards, lists, asks)
-- `docs/` — generated HTML published via GitHub Pages (docs folder workflow)
+## Source Structure
 
-## Contact
+- `source/template.html` — slide shell; colors/fonts/spacing are `__TOKEN__` placeholders filled from the theme
+- `source/themes/agape-farm.json` — theme tokens (colors, fonts, radii, padding)
+- `source/themes/agape-farm.css` — compiled `:root` custom properties for static serving
+- `source/generate.ps1` — YAML-to-HTML generator
+- `source/*.yml` — deck content (meta + slides)
 
-Agape Farmstead · Clarksville / Adams, TN · (931) 272-1269 · agapefarmstead@outlook.com
+## Edit Content
+
+Edit any YAML file — titles, subtitles, lists, cards, phases, stats, and the ask slide — then rerun the generator. No HTML editing required.

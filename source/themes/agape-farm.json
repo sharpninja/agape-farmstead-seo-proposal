@@ -1,0 +1,20 @@
+{
+  "name": "agape-farm",
+  "description": "Warm regenerative-farm palette inspired by agapefarmstead.com: cream paper, olive green, earthy brown, serif headlines.",
+  "tokens": {
+    "theme_color": "#3d4a2c",
+    "forest": "#2f3a22",
+    "forest_mid": "#3d4a2c",
+    "accent": "#6b7f3a",
+    "accent_dim": "#55662e",
+    "cream": "#f7f1e5",
+    "muted": "#7a6f5d",
+    "card_bg": "#efe6d6",
+    "accent2": "#8a5a2b",
+    "heading_font": "Georgia",
+    "body_font": "system-ui",
+    "radius_px": 10,
+    "pad_x_px": 32,
+    "pad_y_px": 48
+  }
+}

@@ -3,15 +3,7 @@ meta:
   description: "Long-term proposal for sustainable brand growth: regenerative land stewardship, community roots, and a multi-year roadmap for Agape Farmstead."
   og_title: "Agape Farmstead — Brand Sustainability & Growth"
   og_description: "A five-year vision: land, community, and commerce working together for a farm that outlasts any single season."
-  theme_color: "#0d1f17"
-  forest: "#0d1f17"
-  forest_mid: "#143528"
-  accent: "#3fb950"
-  accent_dim: "#2a7d3a"
-  cream: "#f0f6fc"
-  muted: "#8ba3b0"
-  card_bg: "#12261c"
-  accent2: "#5b9bd5"
+  theme_color: "#3d4a2c"
 
 slides:
   - tag: "Five-Year Brand Vision"
@@ -29,15 +21,12 @@ slides:
     title: "Three Pillars"
     cards:
       - pillar: "Land"
-        pillar_class: "land"
         title: "Stewardship First"
         text: "Soil health, rotational grazing, and River Friendly certification aren't marketing — they're the operating system. The land improves every year, which means the product does too."
       - pillar: "People"
-        pillar_class: "people"
         title: "Community as Infrastructure"
         text: "Farmers market regulars, student interns, church networks, and delivery customers form a moat no competitor can buy. Relationships compound faster than ad spend."
       - pillar: "Purpose"
-        pillar_class: "purpose"
         title: "Faith-Driven Consistency"
         text: "The biblical foundation gives the brand a spine. In a market full of wellness claims, Agape offers something deeper — and that depth is what people remember and share."
 
@@ -50,7 +39,7 @@ slides:
       - "Launch email list and basic CRM to capture every customer relationship"
       - "Document the farm: photo library, short videos, founder story on video"
       - "Formalize the River Friendly and regenerative certifications in all marketing"
-    subtitle: "Year one is about being findable and memorable. Nothing else matters until those two are true."
+    subtitle: "Year one is about being findable and memorable."
 
   - tag: "Year Two"
     timeline: "Months 13–24"
@@ -61,18 +50,18 @@ slides:
       - "Launch a simple subscription model for eggs and monthly meat shares"
       - "Begin content cadence: monthly farm updates, seasonal guides, behind-the-scenes"
       - "Explore agritourism: farm visits, school field trips tied to the internship program"
-    subtitle: "Year two turns one-time buyers into recurring relationships across multiple revenue streams."
+    subtitle: "Year two turns one-time buyers into recurring relationships."
 
   - tag: "Year Three"
     timeline: "Months 25–36"
     title: "Scale"
     list:
       - "Evaluate second processing or butchering partnership to remove bottlenecks"
-      - "Hire or contract a part-time brand/marketing role — founder time shifts to land and livestock"
+      - "Hire or contract a part-time brand/marketing role"
       - "Expand the internship program into a named pipeline for future farm labor"
       - "Test adjacent products: value-added items, apparel, or branded goods"
       - "Measure everything: customer lifetime value, repeat rate, cost per acquisition by channel"
-    subtitle: "Year three is when the brand stops being a farm with a side hustle and becomes a business with a farm at its heart."
+    subtitle: "Year three is when the brand stops being a farm with a side hustle."
 
   - tag: "Years Four & Five"
     timeline: "Months 37–60"
@@ -83,7 +72,7 @@ slides:
       - "Formalize succession and land-trust or easement planning if multi-generational"
       - "Publish the farm's regenerative data — soil tests, carbon impact — as open proof"
       - "The brand outlives any single product line because it's built on land and trust"
-    subtitle: "By year five, Agape isn't competing on price. It's the name people trust when they ask, who's raising food the right way around here?"
+    subtitle: "By year five, Agape isn't competing on price. It's the name people trust."
 
   - tag: "What Sustainability Really Means"
     title: "What Sustainability Really Means"
@@ -92,14 +81,11 @@ slides:
         text: "Rotational grazing rebuilds soil, sequesters carbon, protects waterways. The River Friendly certification is the receipt."
       - title: "Economic"
         text: "Diversified revenue — retail, delivery, wholesale, subscriptions — means no single channel failing sinks the farm."
-    cards_extra:
-      - title: "Cultural"
-        text: "A brand rooted in faith, family, and community doesn't chase trends. It outlasts them. That's the moat."
-    subtitle: "Most farms optimize for this quarter. Agape's advantage is optimizing for the next fifty years."
+    note: "A brand rooted in faith, family, and community doesn't chase trends. It outlasts them. Most farms optimize for this quarter. Agape's advantage is optimizing for the next fifty years."
 
   - tag: "The Ask"
     title: "The Ask"
-    subtitle: "Adopt the five-year roadmap as the shared vision. Start with Year One commitments: SEO pilot, Thanksgiving delivery, and the email list. Review progress quarterly and adjust the plan as the data comes in."
+    subtitle: "Adopt the five-year roadmap as the shared vision. Start with Year One commitments: SEO pilot, Thanksgiving delivery, and the email list."
     ask:
       title: "Five-Year Partnership"
       text: "Quarterly strategy reviews, annual roadmap refresh, and a shared dashboard tracking land health, customer growth, and revenue diversification."
