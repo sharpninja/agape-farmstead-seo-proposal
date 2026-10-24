@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Agape Farmstead — SEO & Content Proposal</title>
+<meta name="description" content="A proposal to improve search visibility and reach for Agape Farmstead, a regenerative livestock farm in Clarksville, Tennessee.">
+<meta property="og:title" content="Agape Farmstead — SEO & Content Proposal">
+<meta property="og:description" content="Three-phase plan to grow local search visibility for pasture-raised meat in Clarksville, TN.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0d1f17">
+<style>
+  :root {
+    --forest: #0d1f17;
+    --forest-mid: #143528;
+    --green: #3fb950;
+    --green-dim: #2a7d3a;
+    --cream: #f0f6fc;
+    --muted: #8ba3b0;
+    --card: #12261c;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+  body {
+    background: var(--forest);
+    color: var(--cream);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+  }
+  .slide {
+    min-height: 100vh;
+    min-height: 100dvh;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px 32px 72px;
+    position: relative;
+  }
+  .slide::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--green-dim), transparent);
+  }
+  h1 {
+    font-size: clamp(28px, 7vw, 44px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  h2 {
+    font-size: clamp(22px, 5.5vw, 34px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+  .accent { color: var(--green); }
+  .sub {
+    font-size: clamp(15px, 3.8vw, 19px);
+    color: var(--muted);
+    margin-top: 14px;
+    line-height: 1.5;
+    max-width: 36em;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green);
+    border: 1px solid var(--green-dim);
+    border-radius: 999px;
+    padding: 6px 14px;
+    margin-bottom: 22px;
+  }
+  ul {
+    list-style: none;
+    margin-top: 8px;
+  }
+  li {
+    font-size: clamp(15px, 3.8vw, 18px);
+    line-height: 1.55;
+    padding: 11px 0 11px 28px;
+    position: relative;
+    border-bottom: 1px solid rgba(139,163,176,0.15);
+  }
+  li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 19px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid rgba(63,185,80,0.25);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 14px;
+  }
+  .card h3 {
+    font-size: clamp(16px, 4vw, 19px);
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: clamp(14px, 3.5vw, 16px);
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .phase-num {
+    font-size: clamp(40px, 10vw, 64px);
+    font-weight: 800;
+    color: var(--green);
+    opacity: 0.25;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .timeline {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .stat-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .stat {
+    flex: 1;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 16px 12px;
+    text-align: center;
+  }
+  .stat .n {
+    font-size: clamp(22px, 6vw, 32px);
+    font-weight: 800;
+    color: var(--green);
+  }
+  .stat .l {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+  .ask-box {
+    background: linear-gradient(135deg, var(--card), var(--forest-mid));
+    border: 1px solid var(--green);
+    border-radius: 16px;
+    padding: 28px 24px;
+    margin-top: 20px;
+  }
+  .ask-box .price {
+    font-size: clamp(26px, 7vw, 38px);
+    font-weight: 800;
+    color: var(--green);
+  }
+  .dots {
+    position: fixed;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10;
+  }
+  .dots a {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(139,163,176,0.4);
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .dots a.active { background: var(--green); }
+  .bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--green);
+    width: 0%;
+    z-index: 10;
+    transition: width 0.1s linear;
+  }
+  .footer-note {
+    position: absolute;
+    bottom: 24px;
+    left: 32px; right: 32px;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .btn {
+    display: inline-block;
+    margin-top: 24px;
+    background: var(--green);
+    color: var(--forest);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .two-col { display: flex; flex-direction: column; gap: 14px; }
+  @media (min-width: 600px) {
+    .slide { padding: 64px 48px 88px; max-width: 640px; margin: 0 auto; }
+    .two-col { flex-direction: row; }
+    .two-col > div { flex: 1; }
+  }
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<nav class="dots" id="dots"></nav>
+
+<section class="slide" id="s1">
+  <span class="tag">SEO & Content Proposal</span>
+  <h1>Agape Farmstead</h1>
+  <p class="sub">Growing local search visibility for pasture-raised meat in Clarksville, Tennessee — regenerative, faith-driven, River Friendly.</p>
+  <div class="stat-row">
+    <div class="stat"><div class="n">3</div><div class="l">Phases</div></div>
+    <div class="stat"><div class="n">90</div><div class="l">Days</div></div>
+    <div class="stat"><div class="n">1</div><div class="l">Goal: Reach</div></div>
+  </div>
+</section>
+
+<section class="slide" id="s2">
+  <h2>The Hook</h2>
+  <p class="sub">Clarksville shoppers searching for pasture-raised chicken, eggs, and lamb are finding other farms first. Not because Agape isn't better — because the site isn't built to be found.</p>
+  <ul>
+    <li>No meta descriptions — Google writes its own snippets</li>
+    <li>Title tags missing location and product keywords</li>
+    <li>No Google Business Profile — invisible to "near me" searches</li>
+    <li>No structured data — no rich results, no local pack</li>
+  </ul>
+</section>
+
+<section class="slide" id="s3">
+  <h2>What's Working</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Brand & Mission</h3>
+      <p>Clear regenerative identity, faith-driven story, River Friendly Farm certification. Strong differentiators most farms can't claim.</p>
+    </div>
+    <div class="card">
+      <h3>Content Foundation</h3>
+      <p>Product descriptions with pricing, deposit notes, and pasture-raised details. A real story page, not a template.</p>
+    </div>
+  </div>
+  <ul>
+    <li>Squarespace technical base: clean sitemap, correct canonicals, mobile-ready</li>
+    <li>Cumberland River Compact backlink — credible local authority</li>
+    <li>Clarksville Farmers Market presence as an offline channel</li>
+  </ul>
+</section>
+
+<section class="slide" id="s4">
+  <div class="phase-num">01</div>
+  <div class="timeline">Weeks 1–2 · Quick Wins</div>
+  <h2>On-Page Fixes</h2>
+  <ul>
+    <li>Rewrite titles: "Pasture-Raised Meat | Agape Farmstead | Clarksville, TN"</li>
+    <li>Add 150–160 character meta descriptions with location + offer + differentiator</li>
+    <li>One H1 per page; fix the homepage's duplicate headings</li>
+    <li>Alt text on every product image</li>
+  </ul>
+  <p class="sub">Highest impact per hour spent. Most of this is done inside Squarespace's editor.</p>
+</section>
+
+<section class="slide" id="s5">
+  <div class="phase-num">02</div>
+  <div class="timeline">Weeks 2–4 · Local Visibility</div>
+  <h2>Get Found Nearby</h2>
+  <ul>
+    <li>Claim and fully optimize a Google Business Profile — categories, photos, products, hours, reviews</li>
+    <li>Add LocalBusiness schema: name, service area, phone, email, URL</li>
+    <li>Build an ordering FAQ: pickup, delivery radius, deposit process, market days</li>
+    <li>Naturally repeat Adams / Clarksville / Middle Tennessee / within 50 miles</li>
+  </ul>
+  <p class="sub">This is where "pasture-raised chicken near me" starts returning Agape instead of the next farm over.</p>
+</section>
+
+<section class="slide" id="s6">
+  <div class="phase-num">03</div>
+  <div class="timeline">Months 2–3 · Content Engine</div>
+  <h2>Seasonal Storytelling</h2>
+  <ul>
+    <li>4–6 posts: market days, seasonal availability, certifications, student internships</li>
+    <li>Lean into the differentiator: regenerative + River Friendly + faith-driven</li>
+    <li>Link to the Cumberland River Compact profile — turn a backlink into a partnership</li>
+    <li>Internal links from homepage to key products and contact</li>
+  </ul>
+  <p class="sub">Content compounds. Each post is another door into local search.</p>
+</section>
+
+<section class="slide" id="s7">
+  <h2>Why It Matters</h2>
+  <div class="card">
+    <h3>Name Collision</h3>
+    <p>Dozens of "Agape Farms" exist nationwide. Branded-plus-location keywords are the only way to own the result.</p>
+  </div>
+  <div class="card">
+    <h3>The Long Tail Wins</h3>
+    <p>"Pasture-raised chicken Clarksville TN" is winnable. "Farm store near me" is not — at least not yet.</p>
+  </div>
+  <div class="card">
+    <h3>Trust Transfers</h3>
+    <p>A shopper who finds Agape via search arrives pre-sold on regenerative values. Less education, faster conversion.</p>
+  </div>
+</section>
+
+<section class="slide" id="s8">
+  <h2>The Ask</h2>
+  <p class="sub">Start with Phase 1 as a fixed-scope pilot. Prove the lift on titles, descriptions, and headings before committing to local SEO and content.</p>
+  <div class="ask-box">
+    <div class="price">Phase 1 Pilot</div>
+    <p style="margin-top:10px;color:var(--muted);font-size:15px;line-height:1.5;">On-page optimization across homepage, products, and story pages. Delivered in two weeks with a before/after report.</p>
+    <a class="btn" href="mailto:agapefarmstead@outlook.com?subject=Agape%20Farmstead%20SEO%20Proposal">Let's Talk</a>
+  </div>
+  <p class="footer-note">Prepared for Agape Farmstead · Clarksville / Adams, TN · (931) 272-1269</p>
+</section>
+
+<section class="slide" id="s9">
+  <span class="tag">Next Step</span>
+  <h1>From Invisible<br>to <span class="accent">Inevitable.</span></h1>
+  <p class="sub">The farm is already doing the hard part — raising better food the right way. This proposal just makes sure the internet knows it.</p>
+  <ul>
+    <li>Reply to this proposal to schedule a 30-minute walkthrough</li>
+    <li>Or visit in person at the Clarksville Farmers Market</li>
+  </ul>
+  <p class="footer-note">agapefarmstead.com · agapefarmstead@outlook.com</p>
+</section>
+
+<script>
+  const slides = document.querySelectorAll('.slide);
+  const dots = document.getElementById('dots);
+  const bar = document.getElementById('bar);
+  slides.forEach((s, i) => {
+    const a = document.createElement('a);
+    a.href = '#s' + (i+1);
+    dots.appendChild(a);
+  });
+  const dotLinks = dots.querySelectorAll('a);
+  function update() {
+    const y = window.scrollY;
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (h > 0 ? y / h * 100 : 0) + '%';
+    let active = 0;
+    slides.forEach((s, i) => { if (s.offsetTop - window.innerHeight/2 <= y) active = i; });
+    dotLinks.forEach((d, i) => d.classList.toggle('active', i === active));
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+</script>
+</body>
+</html>
