@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>__TITLE__</title>
+<meta name="description" content="__DESCRIPTION__">
+<meta property="og:title" content="__OG_TITLE__">
+<meta property="og:description" content="__OG_DESCRIPTION__">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="__THEME_COLOR__">
+<style>
+  :root {
+    --forest: __FOREST__;
+    --forest-mid: __FOREST_MID__;
+    --green: __ACCENT_COLOR__;
+    --green-dim: __ACCENT_DIM__;
+    --cream: __CREAM__;
+    --muted: __MUTED__;
+    --card: __CARD_BG__;
+    --accent2: __ACCENT2_COLOR__;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+  body {
+    background: var(--forest);
+    color: var(--cream);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+  }
+  .slide {
+    min-height: 100vh;
+    min-height: 100dvh;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px 32px 72px;
+    position: relative;
+  }
+  .slide::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--green-dim), transparent);
+  }
+  h1 {
+    font-size: clamp(28px, 7vw, 44px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  h2 {
+    font-size: clamp(22px, 5.5vw, 34px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+  .accent { color: var(--green); }
+  .accent2 { color: var(--accent2); }
+  .sub {
+    font-size: clamp(15px, 3.8vw, 19px);
+    color: var(--muted);
+    margin-top: 14px;
+    line-height: 1.5;
+    max-width: 36em;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green);
+    border: 1px solid var(--green-dim);
+    border-radius: 999px;
+    padding: 6px 14px;
+    margin-bottom: 22px;
+  }
+  ul { list-style: none; margin-top: 8px; }
+  li {
+    font-size: clamp(15px, 3.8vw, 18px);
+    line-height: 1.55;
+    padding: 11px 0 11px 28px;
+    position: relative;
+    border-bottom: 1px solid rgba(139,163,176,0.15);
+  }
+  li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 19px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid rgba(63,185,80,0.25);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 14px;
+  }
+  .card h3 {
+    font-size: clamp(16px, 4vw, 19px);
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: clamp(14px, 3.5vw, 16px);
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .phase-num {
+    font-size: clamp(40px, 10vw, 64px);
+    font-weight: 800;
+    color: var(--green);
+    opacity: 0.25;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .timeline {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .stat-row { display: flex; gap: 16px; margin-top: 24px; }
+  .stat {
+    flex: 1;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 16px 12px;
+    text-align: center;
+  }
+  .stat .n {
+    font-size: clamp(22px, 6vw, 32px);
+    font-weight: 800;
+    color: var(--green);
+  }
+  .stat .l {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+  .ask-box {
+    background: linear-gradient(135deg, var(--card), var(--forest-mid));
+    border: 1px solid var(--accent2);
+    border-radius: 16px;
+    padding: 28px 24px;
+    margin-top: 20px;
+  }
+  .ask-box .price {
+    font-size: clamp(26px, 7vw, 38px);
+    font-weight: 800;
+    color: var(--accent2);
+  }
+  .dots {
+    position: fixed;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10;
+  }
+  .dots a {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(139,163,176,0.4);
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .dots a.active { background: var(--green); }
+  .bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--green);
+    width: 0%;
+    z-index: 10;
+    transition: width 0.1s linear;
+  }
+  .footer-note {
+    position: absolute;
+    bottom: 24px;
+    left: 32px; right: 32px;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .btn {
+    display: inline-block;
+    margin-top: 24px;
+    background: var(--accent2);
+    color: var(--forest);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .two-col { display: flex; flex-direction: column; gap: 14px; }
+  .note-box {
+    font-size: clamp(14px, 3.5vw, 17px);
+    color: var(--muted);
+    line-height: 1.5;
+    margin-top: 16px;
+    padding: 16px;
+    background: var(--card);
+    border-radius: 12px;
+    border-left: 3px solid var(--accent2);
+  }
+  .pillar {
+    font-size: clamp(13px, 3.2vw, 15px);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  @media (min-width: 600px) {
+    .slide { padding: 64px 48px 88px; max-width: 640px; margin: 0 auto; }
+    .two-col { flex-direction: row; }
+    .two-col > div { flex: 1; }
+  }
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<nav class="dots" id="dots"></nav>
+__SLIDES__
+<script>
+  const slides = document.querySelectorAll('.slide);
+  const dots = document.getElementById('dots);
+  const bar = document.getElementById('bar);
+  slides.forEach((s, i) => {
+    const a = document.createElement('a);
+    a.href = '#s' + (i+1);
+    dots.appendChild(a);
+  });
+  const dotLinks = dots.querySelectorAll('a);
+  function update() {
+    const y = window.scrollY;
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (h > 0 ? y / h * 100 : 0) + '%;
+    let active = 0;
+    slides.forEach((s, i) => { if (s.offsetTop - window.innerHeight/2 <= y) active = i; });
+    dotLinks.forEach((d, i) => d.classList.toggle('active', i === active));
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+</script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+meta:
+  title: "Agape Farmstead — Thanksgiving Delivery Expansion"
+  description: "Proposal to expand Agape Farmstead reach to a 200-mile radius around Clarksville, TN with fresh poultry delivery before Thanksgiving."
+  og_title: "Agape Farmstead — Thanksgiving Delivery Expansion"
+  og_description: "Fresh pasture-raised poultry delivered before Thanksgiving across Middle Tennessee, Kentucky, and beyond."
+  theme_color: "#0d1f17"
+  forest: "#0d1f17"
+  forest_mid: "#143528"
+  accent: "#3fb950"
+  accent_dim: "#2a7d3a"
+  cream: "#f0f6fc"
+  muted: "#8ba3b0"
+  card_bg: "#12261c"
+  accent2: "#e8a838"
+
+slides:
+  - tag: "Thanksgiving 2026 Expansion"
+    title: "Fresh Poultry,<br>__ACCENT__Delivered.__"
+    subtitle: "Agape Farmstead proposes expanding beyond Clarksville to a 200-mile radius — Nashville, Bowling Green, Paducah, Chattanooga — with fresh pasture-raised birds on doorsteps before Thanksgiving."
+    stats:
+      - n: "200"
+        l: "Mile Radius"
+      - n: "4"
+        l: "Major Cities"
+      - n: "Nov"
+        l: "Delivery Window"
+
+  - tag: "The Opportunity"
+    title: "The Opportunity"
+    subtitle: "Thanksgiving is the single biggest poultry-buying event of the year. Most families in Middle Tennessee buy frozen birds from big-box stores weeks in advance — or drive to a farm they found by word of mouth."
+    list:
+      - "Fresh, never-frozen pasture-raised turkey and chicken is rare in this market"
+      - "Urban Nashville shoppers will pay a premium for provenance they can verify"
+      - "A 200-mile radius captures roughly 2 million people — a market Agape has never touched"
+      - "Delivery removes the biggest barrier: the drive to a rural farm"
+
+  - tag: "The 200-Mile Map"
+    title: "The 200-Mile Map"
+    cards:
+      - title: "North & West"
+        text: "Bowling Green, KY · Paducah, KY · Hopkinsville · Clarksville core"
+      - title: "South & East"
+        text: "Nashville · Murfreesboro · Chattanooga edge · Cookeville"
+    note: "Delivery zones priced by distance tier. Core Clarksville area: flat rate. Outer ring (150–200 miles): premium tier covering fuel and cold-chain handling. No zone left unserved — every order gets a delivery date commitment."
+
+  - phase: "01"
+    timeline: "Now – October 15 · Launch"
+    title: "Open Orders"
+    list:
+      - "Landing page + order form live on agapefarmstead.com with delivery-radius messaging"
+      - "Social push: Instagram, Facebook, local food groups in Nashville and Bowling Green"
+      - "Partner blast to Clarksville Farmers Market regulars for referrals"
+      - "Email list signup with reserve your bird early-bird pricing"
+    subtitle: "Goal: 50 committed orders by October 31. That's the signal to scale processing."
+
+  - phase: "02"
+    timeline: "October 16 – November 10 · Fulfill"
+    title: "Process & Deliver"
+    list:
+      - "Scheduled processing days to hit fresh-never-frozen quality"
+      - "Cold-chain delivery: insulated boxes, ice packs, next-day or two-day windows"
+      - "Delivery days clustered by zone to maximize route efficiency"
+      - "Optional add-ons: eggs, ground chicken, dog nutrient supplements"
+    subtitle: "Every delivery is a brand experience. Families remember who brought the bird."
+
+  - phase: "03"
+    timeline: "November 11 – 26 · Peak Week"
+    title: "Thanksgiving Rush"
+    list:
+      - "Final delivery wave November 20–26 for fresh birds on the table"
+      - "Same-week cutoffs clearly communicated — no last-minute chaos"
+      - "Photo + story content from delivery days for post-holiday marketing"
+      - "Capture reviews and referrals while gratitude is high"
+    subtitle: "This isn't just a sale. It's the proof point for a year-round delivery business."
+
+  - tag: "Why This Works"
+    title: "Why This Works"
+    cards:
+      - title: "Scarcity Is Real"
+        text: "Fresh local turkey before Thanksgiving is genuinely hard to find. Agape already raises the birds — the gap is distribution, not production."
+      - title: "One Season, Permanent Channel"
+        text: "Thanksgiving customers become the seed list for Christmas, Easter, and weekly egg or meat subscriptions. The radius doesn't shrink after November."
+      - title: "Faith & Story Travel Well"
+        text: "The regenerative, faith-driven mission resonates beyond Clarksville. Urban buyers are actively searching for exactly this."
+
+  - tag: "The Ask"
+    title: "The Ask"
+    subtitle: "Commit to the Thanksgiving delivery pilot. Agape handles production, processing coordination, and delivery logistics. What we need: a decision by October 10 and a small marketing push to fill the first 50 orders."
+    ask:
+      title: "Thanksgiving Pilot"
+      text: "200-mile delivery radius, fresh poultry, orders open now through November. Revenue split or flat per-bird rate — your call on structure."
+      button: "Reserve Your Bird"
+      button_href: "mailto:agapefarmstead@outlook.com?subject=Agape%20Farmstead%20Thanksgiving%20Delivery%20Proposal"
+    footer: "Prepared for Agape Farmstead · Clarksville / Adams, TN · (931) 272-1269"
+
+  - tag: "The Table"
+    title: "From Farm<br>to __ACCENT2__Table.__"
+    subtitle: "Thanksgiving is when families gather and remember what food is supposed to taste like. Agape can put that on tables across two hundred miles — fresh, local, and raised right."
+    list:
+      - "Open orders this week at agapefarmstead.com"
+      - "Or call (931) 272-1269 to reserve directly"
+    footer: "agapefarmstead.com · agapefarmstead@outlook.com"

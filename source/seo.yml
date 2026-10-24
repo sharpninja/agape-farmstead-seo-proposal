@@ -1,0 +1,105 @@
+meta:
+  title: "Agape Farmstead — SEO & Content Proposal"
+  description: "A proposal to improve search visibility and reach for Agape Farmstead, a regenerative livestock farm in Clarksville, Tennessee."
+  og_title: "Agape Farmstead — SEO & Content Proposal"
+  og_description: "Three-phase plan to grow local search visibility for pasture-raised meat in Clarksville, TN."
+  theme_color: "#0d1f17"
+  forest: "#0d1f17"
+  forest_mid: "#143528"
+  accent: "#3fb950"
+  accent_dim: "#2a7d3a"
+  cream: "#f0f6fc"
+  muted: "#8ba3b0"
+  card_bg: "#12261c"
+  accent2: "#3fb950"
+
+slides:
+  - tag: "SEO & Content Proposal"
+    title: "Agape Farmstead"
+    subtitle: "Growing local search visibility for pasture-raised meat in Clarksville, Tennessee — regenerative, faith-driven, River Friendly."
+    stats:
+      - n: "3"
+        l: "Phases"
+      - n: "90"
+        l: "Days"
+      - n: "1"
+        l: "Goal: Reach"
+
+  - tag: "The Hook"
+    title: "The Hook"
+    subtitle: "Clarksville shoppers searching for pasture-raised chicken, eggs, and lamb are finding other farms first. Not because Agape isn't better — because the site isn't built to be found."
+    list:
+      - "No meta descriptions — Google writes its own snippets"
+      - "Title tags missing location and product keywords"
+      - "No Google Business Profile — invisible to near me searches"
+      - "No structured data — no rich results, no local pack"
+
+  - tag: "What's Working"
+    title: "What's Working"
+    cards:
+      - title: "Brand & Mission"
+        text: "Clear regenerative identity, faith-driven story, River Friendly Farm certification. Strong differentiators most farms can't claim."
+      - title: "Content Foundation"
+        text: "Product descriptions with pricing, deposit notes, and pasture-raised details. A real story page, not a template."
+    list:
+      - "Squarespace technical base: clean sitemap, correct canonicals, mobile-ready"
+      - "Cumberland River Compact backlink — credible local authority"
+      - "Clarksville Farmers Market presence as an offline channel"
+
+  - phase: "01"
+    timeline: "Weeks 1–2 · Quick Wins"
+    title: "On-Page Fixes"
+    list:
+      - "Rewrite titles: Pasture-Raised Meat | Agape Farmstead | Clarksville, TN"
+      - "Add 150–160 character meta descriptions with location + offer + differentiator"
+      - "One H1 per page; fix the homepage's duplicate headings"
+      - "Alt text on every product image"
+    subtitle: "Highest impact per hour spent. Most of this is done inside Squarespace's editor."
+
+  - phase: "02"
+    timeline: "Weeks 2–4 · Local Visibility"
+    title: "Get Found Nearby"
+    list:
+      - "Claim and fully optimize a Google Business Profile — categories, photos, products, hours, reviews"
+      - "Add LocalBusiness schema: name, service area, phone, email, URL"
+      - "Build an ordering FAQ: pickup, delivery radius, deposit process, market days"
+      - "Naturally repeat Adams / Clarksville / Middle Tennessee / within 50 miles"
+    subtitle: "This is where pasture-raised chicken near me starts returning Agape instead of the next farm over."
+
+  - phase: "03"
+    timeline: "Months 2–3 · Content Engine"
+    title: "Seasonal Storytelling"
+    list:
+      - "4–6 posts: market days, seasonal availability, certifications, student internships"
+      - "Lean into the differentiator: regenerative + River Friendly + faith-driven"
+      - "Link to the Cumberland River Compact profile — turn a backlink into a partnership"
+      - "Internal links from homepage to key products and contact"
+    subtitle: "Content compounds. Each post is another door into local search."
+
+  - tag: "Why It Matters"
+    title: "Why It Matters"
+    cards:
+      - title: "Name Collision"
+        text: "Dozens of Agape Farms exist nationwide. Branded-plus-location keywords are the only way to own the result."
+      - title: "The Long Tail Wins"
+        text: "Pasture-raised chicken Clarksville TN is winnable. Farm store near me is not — at least not yet."
+      - title: "Trust Transfers"
+        text: "A shopper who finds Agape via search arrives pre-sold on regenerative values. Less education, faster conversion."
+
+  - tag: "The Ask"
+    title: "The Ask"
+    subtitle: "Start with Phase 1 as a fixed-scope pilot. Prove the lift on titles, descriptions, and headings before committing to local SEO and content."
+    ask:
+      title: "Phase 1 Pilot"
+      text: "On-page optimization across homepage, products, and story pages. Delivered in two weeks with a before/after report."
+      button: "Let's Talk"
+      button_href: "mailto:agapefarmstead@outlook.com?subject=Agape%20Farmstead%20SEO%20Proposal"
+    footer: "Prepared for Agape Farmstead · Clarksville / Adams, TN · (931) 272-1269"
+
+  - tag: "Next Step"
+    title: "From Invisible<br>to __ACCENT__Inevitable.__"
+    subtitle: "The farm is already doing the hard part — raising better food the right way. This proposal just makes sure the internet knows it."
+    list:
+      - "Reply to this proposal to schedule a 30-minute walkthrough"
+      - "Or visit in person at the Clarksville Farmers Market"
+    footer: "agapefarmstead.com · agapefarmstead@outlook.com"
